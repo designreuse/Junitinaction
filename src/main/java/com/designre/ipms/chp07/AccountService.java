@@ -1,4 +1,5 @@
 package com.designre.ipms.chp07;
+
 /*
  * ========================================================================
  *
@@ -19,41 +20,24 @@ package com.designre.ipms.chp07;
  *
  * ========================================================================
  */
+public class AccountService {
 
-public class Account {
+    private AccountManager accountManager;
 
-    private String accountId;
-    private long balance;
 
-    public long getBalance() {
-        return balance;
+    public void setAccountManager(AccountManager accountManager){
+        this.accountManager = accountManager;
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
-    }
+    public void transfer(String senderId, String beneficiaryId, long ammount){
+        Account sender   = this.accountManager.findAccountForUser(senderId);
+        Account receiver = this.accountManager.findAccountForUser(beneficiaryId);
 
-    public Account(String accountId, long balance){
+        sender.debit(ammount);
+        receiver.credit(ammount);
 
-        this.accountId = accountId;
-        this.balance    = balance;
-    }
+        this.accountManager.updateAccount(sender);
+        this.accountManager.updateAccount(receiver);
 
-    public void debit(long ammount){
-
-        this.balance -= ammount;
-    }
-
-    public void credit(long ammount){
-
-        this.balance += ammount;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
     }
 }

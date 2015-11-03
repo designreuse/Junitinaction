@@ -1,4 +1,5 @@
 package com.designre.ipms.chp07;
+
 /*
  * ========================================================================
  *
@@ -20,40 +21,35 @@ package com.designre.ipms.chp07;
  * ========================================================================
  */
 
-public class Account {
+import junit.framework.TestCase;
 
-    private String accountId;
-    private long balance;
+public class AccountServiceTest extends TestCase {
 
-    public long getBalance() {
-        return balance;
+    public void setUp() throws Exception {
+        super.setUp();
+
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
+    public void tearDown() throws Exception {
+
     }
 
-    public Account(String accountId, long balance){
+    public void testTransfer() throws Exception {
 
-        this.accountId = accountId;
-        this.balance    = balance;
-    }
+        MockAccountManager mockAccountManager = new MockAccountManager();
 
-    public void debit(long ammount){
+        Account senderAccount      = new Account("1", 200);
+        Account beneficiaryAccount = new Account("2", 100);
 
-        this.balance -= ammount;
-    }
+        mockAccountManager.addAccount("1", senderAccount);
+        mockAccountManager.addAccount("2", beneficiaryAccount);
 
-    public void credit(long ammount){
+        AccountService accountService = new AccountService();
+        accountService.setAccountManager(mockAccountManager);
+        accountService.transfer("1", "2", 50);
 
-        this.balance += ammount;
-    }
+        assertEquals(150, senderAccount.getBalance());
+        assertEquals(150, beneficiaryAccount.getBalance());
 
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
     }
 }

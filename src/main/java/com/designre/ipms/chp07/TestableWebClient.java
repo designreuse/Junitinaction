@@ -1,4 +1,9 @@
 package com.designre.ipms.chp07;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 /*
  * ========================================================================
  *
@@ -19,41 +24,15 @@ package com.designre.ipms.chp07;
  *
  * ========================================================================
  */
+public class TestableWebClient extends WebClient {
 
-public class Account {
+    private HttpURLConnection connection;
 
-    private String accountId;
-    private long balance;
-
-    public long getBalance() {
-        return balance;
+    public HttpURLConnection createHttpURLConnection(URL url) throws IOException{
+        return connection;
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
-    }
-
-    public Account(String accountId, long balance){
-
-        this.accountId = accountId;
-        this.balance    = balance;
-    }
-
-    public void debit(long ammount){
-
-        this.balance -= ammount;
-    }
-
-    public void credit(long ammount){
-
-        this.balance += ammount;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setHttpURLConnection(HttpURLConnection connection) {
+        this.connection = connection;
     }
 }

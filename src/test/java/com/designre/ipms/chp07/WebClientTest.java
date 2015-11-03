@@ -1,4 +1,12 @@
 package com.designre.ipms.chp07;
+
+import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+
 /*
  * ========================================================================
  *
@@ -20,40 +28,29 @@ package com.designre.ipms.chp07;
  * ========================================================================
  */
 
-public class Account {
+public class WebClientTest extends TestCase {
 
-    private String accountId;
-    private long balance;
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
 
-    public long getBalance() {
-        return balance;
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
+    @Test
+    public void testGetContent() throws Exception {
+        MockConnectionFactory mockConnectionFactory = new MockConnectionFactory();
+        mockConnectionFactory.setData(new ByteArrayInputStream("It Works".getBytes()));
+
+        WebClient client = new WebClient();
+        String result = client.getContent(mockConnectionFactory);
+        assertEquals("It Works", result);
+
     }
 
-    public Account(String accountId, long balance){
+    @After
+    public void tearDown() throws Exception {
 
-        this.accountId = accountId;
-        this.balance    = balance;
     }
 
-    public void debit(long ammount){
 
-        this.balance -= ammount;
-    }
-
-    public void credit(long ammount){
-
-        this.balance += ammount;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
 }

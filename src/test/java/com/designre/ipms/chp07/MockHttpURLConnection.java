@@ -1,4 +1,5 @@
 package com.designre.ipms.chp07;
+
 /*
  * ========================================================================
  *
@@ -20,40 +21,32 @@ package com.designre.ipms.chp07;
  * ========================================================================
  */
 
-public class Account {
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-    private String accountId;
-    private long balance;
+public class MockHttpURLConnection extends HttpURLConnection{
 
-    public long getBalance() {
-        return balance;
+    protected MockHttpURLConnection(URL u) {
+        super(u);
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
+    public void setExpectedInputStream(ByteArrayInputStream byteArrayInputStream) {
     }
 
-    public Account(String accountId, long balance){
+    @Override
+    public void disconnect() {
 
-        this.accountId = accountId;
-        this.balance    = balance;
     }
 
-    public void debit(long ammount){
-
-        this.balance -= ammount;
+    @Override
+    public boolean usingProxy() {
+        return false;
     }
 
-    public void credit(long ammount){
+    @Override
+    public void connect() throws IOException {
 
-        this.balance += ammount;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
     }
 }

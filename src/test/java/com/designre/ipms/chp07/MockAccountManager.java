@@ -1,4 +1,8 @@
 package com.designre.ipms.chp07;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * ========================================================================
  *
@@ -19,41 +23,20 @@ package com.designre.ipms.chp07;
  *
  * ========================================================================
  */
+public class MockAccountManager implements AccountManager {
 
-public class Account {
+    private Map<String, Account> accounts = new HashMap<String, Account>();
 
-    private String accountId;
-    private long balance;
-
-    public long getBalance() {
-        return balance;
+    public void addAccount(String userId, Account account){
+        accounts.put(userId, account);
     }
 
-    public void setBalance(long balance) {
-        this.balance = balance;
+
+    public Account findAccountForUser(String userId) {
+        return accounts.get(userId);
     }
 
-    public Account(String accountId, long balance){
+    public void updateAccount(Account account) {
 
-        this.accountId = accountId;
-        this.balance    = balance;
-    }
-
-    public void debit(long ammount){
-
-        this.balance -= ammount;
-    }
-
-    public void credit(long ammount){
-
-        this.balance += ammount;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
     }
 }
