@@ -1,11 +1,16 @@
 package com.designre.ipms.chp07;
 
-
+import junit.framework.TestCase;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
 
 /*
@@ -28,42 +33,48 @@ import static org.junit.Assert.assertEquals;
  *
  * ========================================================================
  */
-public class TestAccountServiceEasyMock {
 
+public class TestAccountServiceJMock {
+
+    private Mockery context = new JUnit4Mockery();
     private AccountManager mockAccountManager;
 
     @Before
     public void setUp(){
-        mockAccountManager = createMock("mockAccountManager", AccountManager.class);
+        mockAccountManager = context.mock( AccountManager.class );
     }
 
     @Test
     public void testTransfer(){
+        final Account senderAccount = new Account( "1", 200 );
+        final Account beneficiaryAccount = new Account( "2", 100 );
+        context.checking( new Expectations()
+        {
+            {
+                oneOf( mockAccountManager ).findAccountForUser( "1" );
+                will( returnValue( senderAccount ) );
 
-        Account senderAccount = new Account( "1", 200 );
-        Account beneficiaryAccount = new Account( "2", 100 );
+                oneOf( mockAccountManager ).findAccountForUser( "2" );
+                will( returnValue( beneficiaryAccount ) );
 
-        // Start defining the expectations
-        mockAccountManager.updateAccount( senderAccount );
-        mockAccountManager.updateAccount( beneficiaryAccount );
+                oneOf( mockAccountManager ).updateAccount(senderAccount);
+                oneOf( mockAccountManager ).updateAccount(beneficiaryAccount);
 
-        expect( mockAccountManager.findAccountForUser( "1" )).andReturn(senderAccount);
-        expect( mockAccountManager.findAccountForUser( "2" )).andReturn(beneficiaryAccount);
+            }
+        });
 
-        // we’re done defining the expectations
-        replay( mockAccountManager );
         AccountService accountService = new AccountService();
         accountService.setAccountManager( mockAccountManager );
         accountService.transfer( "1", "2", 50 );
         assertEquals( 150, senderAccount.getBalance() );
-        assertEquals( 150, beneficiaryAccount.getBalance() );
+        assertEquals(150, beneficiaryAccount.getBalance());
+
 
     }
 
     @After
     public void tearDown(){
-        verify(mockAccountManager);
-    }
 
+    }
 
 }
