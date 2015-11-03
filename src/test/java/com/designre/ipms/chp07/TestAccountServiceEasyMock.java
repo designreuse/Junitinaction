@@ -1,13 +1,8 @@
 package com.designre.ipms.chp07;
 
-import junit.framework.TestCase;
-import org.junit.After;
+
 import org.junit.Before;
-import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-
-import static org.junit.Assert.assertEquals;
+import static org.ea
 
 /*
  * ========================================================================
@@ -29,29 +24,12 @@ import static org.junit.Assert.assertEquals;
  *
  * ========================================================================
  */
+public class TestAccountServiceEasyMock {
 
-public class WebClientTest {
+    private AccountManager mockAccountManager;
 
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp(){
+        mockAccountManager = createMock("mockAccountManager", AccountManager.class);
     }
-
-    @Test
-    public void testGetContent() throws Exception {
-        MockConnectionFactory mockConnectionFactory = new MockConnectionFactory();
-        mockConnectionFactory.setData(new ByteArrayInputStream("It Works".getBytes()));
-
-        WebClient client = new WebClient();
-        String result = client.getContent(mockConnectionFactory);
-        assertEquals("It Works", result);
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
-
 }
