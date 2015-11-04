@@ -55,12 +55,13 @@ public class WebClientTestEasyMock  {
         expect( factory.getData() ).andReturn(stream);
         expect(stream.read()).andReturn( new Integer( (byte) 'I'));
         expect( stream.read()).andReturn( new Integer( (byte) 't'));
-
+        expect( stream.read()).andReturn( new Integer( (byte) ' '));
         expect( stream.read()).andReturn( new Integer( (byte) 'W'));
         expect( stream.read()).andReturn( new Integer( (byte) 'o'));
         expect( stream.read()).andReturn( new Integer( (byte) 'r'));
         expect( stream.read()).andReturn( new Integer( (byte) 'k'));
         expect( stream.read()).andReturn( new Integer( (byte) 's'));
+        expect( stream.read()).andReturn( new Integer( (byte) '!'));
         expect( stream.read() ).andReturn(-1);
         stream.close();
 
@@ -69,7 +70,7 @@ public class WebClientTestEasyMock  {
 
         WebClient client = new WebClient();
         String result = client.getContent( factory );
-        assertEquals("ItWorks", result);
+        assertEquals("It Works!", result);
     }
 
     @Test
