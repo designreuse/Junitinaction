@@ -97,7 +97,7 @@ public class TestWebClient
 
             OutputStream out = response.getOutputStream();
             ByteArrayISO8859Writer writer = new ByteArrayISO8859Writer();
-            writer.write( "It works" );
+            writer.write( "It works!" );
             writer.flush();
             response.setIntHeader( HttpHeaders.CONTENT_LENGTH, writer.size() );
             writer.writeTo( out );
