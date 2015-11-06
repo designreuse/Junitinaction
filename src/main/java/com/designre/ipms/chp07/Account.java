@@ -35,7 +35,7 @@ public class Account {
 
     public Account(String accountId, long balance){
 
-        this.accountId1 = accountId;
+        this.accountId = accountId;
         this.balance    = balance;
     }
 
