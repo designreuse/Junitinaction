@@ -76,7 +76,7 @@ public class TestWebClient
         throws Exception
     {
         String result = client.getContent( new URL( "http://localhost:8080/testGetContentOk" ) );
-        assertEquals( "It works", result );
+        assertEquals( "It works!", result );
     }
 
     @Test
