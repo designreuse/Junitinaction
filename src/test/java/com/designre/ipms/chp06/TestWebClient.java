@@ -54,7 +54,7 @@ public class TestWebClient
     public static void setUp()
         throws Exception
     {
-        Server server = new Server( 8080 );
+        Server server = new Server( 8081);
 
         TestWebClient t = new TestWebClient();
 
