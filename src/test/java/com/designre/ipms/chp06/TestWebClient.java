@@ -54,7 +54,7 @@ public class TestWebClient
     public static void setUp()
         throws Exception
     {
-        Server server = new Server( 9080);
+        Server server = new Server( 8080 );
 
         TestWebClient t = new TestWebClient();
 
@@ -75,15 +75,15 @@ public class TestWebClient
     public void testGetContentOk()
         throws Exception
     {
-        String result = client.getContent( new URL( "http://localhost:9080/testGetContentOk" ) );
-        assertEquals( "It works", result );
+        String result = client.getContent( new URL( "http://localhost:8080/testGetContentOk" ) );
+        assertEquals( "It works!", result );
     }
 
     @Test
     public void testGetContentError()
         throws Exception
     {
-        String result = client.getContent( new URL( "http://localhost:9080/testGetContentError/" ) );
+        String result = client.getContent( new URL( "http://localhost:8080/testGetContentError/" ) );
         assertNull( result );
     }
 
@@ -91,7 +91,7 @@ public class TestWebClient
     public void testGetContentNotFound()
         throws Exception
     {
-        String result = client.getContent( new URL( "http://localhost:9080/testGetContentNotFound" ) );
+        String result = client.getContent( new URL( "http://localhost:8080/testGetContentNotFound" ) );
         assertNull( result );
     }
 
