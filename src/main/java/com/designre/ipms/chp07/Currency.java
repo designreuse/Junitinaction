@@ -15,12 +15,13 @@ public class Currency {
     }
 
     private void setAmount(double amount) {
-        this.amount = new Double(amount).longValue();
+        this.amount = (new Double(amount)).longValue();
         this.cents = (int) ((amount * 100.0) % 100);
     }
 
     public Currency toEuros(ExchangeRate converter) {
-        if ("EUR".equals(units)) return this;
+        if ("EUR".equals(units))
+            return this;
         else {
             double input = amount + cents/100.0;
             double rate;
@@ -29,13 +30,15 @@ public class Currency {
                 double output = input * rate;
                 return new Currency(output, "EUR");
             } catch (IOException ex) {
+                System.out.println(ex.getMessage());
                 return null;
             }
         }
     }
 
     public Currency toEurosCAD(ExchangeRate converter) {
-        if ("EUR".equals(units)) return this;
+        if ("EUR".equals(units))
+            return this;
         else {
             double input = amount + cents/100.0;
             double rate;
@@ -44,11 +47,21 @@ public class Currency {
                 double output = input * rate;
                 return new Currency(output, "EUR");
             } catch (IOException e) {
+                System.out.println(e.getMessage());
                 return null;
             }
         }
     }
 
+    @Override
+    public int hashCode() {
+        int result = units.hashCode();
+        result = 31 * result + (int) (amount ^ (amount >>> 32));
+        result = 31 * result + cents;
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Currency) {
             Currency other = (Currency) o;
@@ -59,6 +72,7 @@ public class Currency {
         return false;
     }
 
+    @Override
     public String toString() {
         return amount + "." + Math.abs(cents) + " " + units;
     }
